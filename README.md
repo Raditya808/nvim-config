@@ -55,12 +55,4 @@ git clone https://github.com/ariefdrm/nvim-config.git ~/.config/nvim
 ```bash
 nvim
 ```
-Current Bindings
-```bash
-• Mouse Wheel Down = Jump          // Scroll bawah untuk lompat  
-• Mouse Wheel Up = Jump            // Scroll atas untuk lompat  
-• Alt = LJ Bind                    // Tombol Alt untuk Long Jump  
-• Mouse Button 5 = JB Bind         // Tombol samping mouse kanan untuk Jump Bind  
-• P = HUD On/Off                   // Menampilkan atau menyembunyikan tampilan HUD  
-• N = Noclip HOLD                  // Mode terbang (tekan dan tahan)
-```
+
