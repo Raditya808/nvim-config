@@ -1,3 +1,4 @@
+-- 1. Bootstrapping Lazy.nvim (Download otomatis jika belum ada)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -14,15 +15,29 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- 2. Konfigurasi Utama Lazy.nvim
 require("lazy").setup({
   spec = {
-    -- 1. Import sistem utama LazyVim
+    -- Import sistem utama LazyVim
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
-    -- 2. Plugin tambahan: GitHub Copilot
+    -- Plugin GitHub Copilot (Base)
     { "github/copilot.vim" },
 
-    -- 3. Import folder plugins pribadi kamu
+    -- Plugin Copilot Chat (Tambahan yang kamu minta gabung)
+    {
+      "CopilotC-Nvim/CopilotChat.nvim",
+      dependencies = {
+        { "nvim-lua/plenary.nvim", branch = "master" },
+      },
+      build = "make tiktoken",
+      opts = {
+        -- Kamu bisa isi konfigurasi chat di sini
+        debug = false,
+      },
+    },
+
+    -- Import folder 'plugins' pribadi kamu (jika ada file di lua/plugins/*.lua)
     { import = "plugins" },
   },
   defaults = {
