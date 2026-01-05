@@ -1,4 +1,3 @@
-
 -- lua/keymaps.lua
 
 -- Set leader key to space
@@ -74,16 +73,37 @@ keymap("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 keymap("n", "<leader>lg", ":LazyGit<CR>", opts)
 
--- Dashboard Toggle
+-- =============================================================================
+-- DASHBOARD TOGGLE (OPTIMASI RAM)
+-- =============================================================================
 _G.toggle_dashboard = function()
     local ft = vim.bo.filetype
-    if ft == "snacks_dashboard" or ft == "dashboard" or ft == "alpha" then
-        vim.cmd("bd")
+    local dashboard_fts = { "snacks_dashboard", "dashboard", "alpha", "starter" }
+    
+    -- Cek apakah buffer saat ini adalah dashboard
+    local is_dashboard = false
+    for _, dash_ft in ipairs(dashboard_fts) do
+        if ft == dash_ft then
+            is_dashboard = true
+            break
+        end
+    end
+
+    if is_dashboard then
+        -- Pake bwipeout! buat paksa hapus buffer dari RAM
+        vim.cmd("bwipeout!")
     else
+        -- Buka dashboard berdasarkan plugin yang lu punya
         if pcall(require, "snacks") then
             require("snacks").dashboard.open()
+        elseif pcall(require, "alpha") then
+            vim.cmd("Alpha")
         else
-            vim.cmd("Dashboard")
+            -- Backup ke command Dashboard biasa
+            local status, err = pcall(vim.cmd, "Dashboard")
+            if not status then
+                print("Dashboard plugin tidak ditemukan")
+            end
         end
     end
 end
@@ -92,10 +112,10 @@ keymap("n", "<leader>h", "<cmd>lua toggle_dashboard()<CR>", opts)
 -- =============================================================================
 -- AUTOCMDS
 -- =============================================================================
--- Esc di LazyGit langsung tutup
+-- Esc di LazyGit langsung tutup dan bersihkan memori
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "lazygit",
   callback = function()
-    vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>", { buffer = true, silent = true })
+    vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q!<CR>", { buffer = true, silent = true })
   end,
 })
