@@ -53,4 +53,19 @@ return {
   { "folke/todo-comments.nvim", enabled = false },
   -- renamer
   -- { "filipdutescu/renamer.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+
+  -- neo tree update
+  {
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v3.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "MunifTanjim/nui.nvim",
+  },
+  lazy = false,
+  opts = function()
+    return require("plugins.configs.neotree")
+  end,
+},
 }
