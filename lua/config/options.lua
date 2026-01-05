@@ -84,3 +84,20 @@ vim.keymap.set(
 	'<Esc>"+pa',
 	{ noremap = true, silent = true, desc = "Paste from clipboard in insert mode" }
 )
+
+-- Mengatur kelebaran dari terminal (tidak memiliki celah tertutup)
+local opt = vim.opt
+
+-- Hilangin celah putih / area command line
+opt.cmdheight = 0
+
+-- Biar statusline cuma satu, bukan per window
+opt.laststatus = 3
+
+-- Hilangin mode indicator
+opt.showmode = false
+
+-- Jangan tambahin padding bawah
+opt.fillchars = {
+	eob = " ", -- hilangin ~ ~ ~
+}
