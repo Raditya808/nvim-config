@@ -119,3 +119,14 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q!<CR>", { buffer = true, silent = true })
   end,
 })
+
+
+--- =============================================================================
+-- keymaps update part 24 for redo and undo 
+--- =============================================================================
+
+-- for undo 
+keymap("n", "<C-z>","u",opts)
+
+-- for redo 
+keymap("n","<C-y>","<C-r>",opts)
